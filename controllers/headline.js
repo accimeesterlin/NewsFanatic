@@ -1,6 +1,12 @@
-var db = require("../models")
-var path = require("path");
+var request = require("request");
+var cheerio = require("cheerio");
+var Note = require("../models/note.js");
+var Headline = require("../models/headline.js");
 
 module.exports = function(app) {
+
+	app.get("/", function(req, res) {
+      res.redirect("/headlines")
+	})
 
 }

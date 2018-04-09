@@ -2,17 +2,13 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var mongoose = require("mongoose");
 var cheerio = require("cheerio");
+var exphbs = require("express-handlebars");
 
 var app = express();
 var PORT = process.env.PORT || 3000;
 
-var db = require("./models");
-
-app.use(express.static("public"));
-
-mongoose.connect("mongodb://localhost/week18Populater");
-
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var Headline = require("./models/Headline.js");
+var Note = require("./models/Note.js");
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
@@ -21,11 +17,20 @@ mongoose.connect(MONGODB_URI, {
   useMongoClient: true
 });
 
+app.use(express.static("public"));
+
+mongoose.connect("mongodb://localhost/mongoHeadlines");
+
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+
+var router = express.Router();
+require("./routes/api")(router);
+app.use(router);
+
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(bodyParser.json());
 
-var exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
@@ -33,6 +38,8 @@ app.set("view engine", "handlebars");
 require("./controllers/fetch.js")(app);
 require("./controllers/headline.js")(app);
 require("./controllers/note.js")(app);
+require("./routes/api")(app);
+
 
 // Start the server
 app.listen(PORT, function() {
