@@ -9,17 +9,12 @@ var HeadlineSchema = new Schema({
   	required: true
   },
 
-  summary: {
-  	type: String,
-  	required: true
-  },
-
   url: {
   	type: String,
   	required: true
   },
   
-  note: [
+  notes: [
   {
   	type: Schema.Types.ObjectID,
   	ref: "Note"

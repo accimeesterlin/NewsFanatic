@@ -4,28 +4,36 @@ var request = require("request");
 // Scrape data from one site and place it into the mongodb db
 app.get("/scrape", function(req, res) {
   // Make a request for the news section of `ycombinator`
-  request("https://www.huffingtonpost.com/", function(error, response, html) {
+  request("https://www.newyorker.com/news", function(error, response, html) {
     // Load the html body from request into cheerio
-    var $ = cheerio.load(html);
+    var $ = cheerio.load(response.data);
     // For each element with a "title" class
-    $(".card__headlines").each(function(i, element) {
-      // Save the text and href of each link enclosed in the current element
-      var title = $(element).children("a").text();
-      var link = $(element).children("a").attr("href");
+    $(".Card__dekImageContainer___3CRKY").each(function(i, element) {
+      // Save an empty result object
+      var result = {};
 
-      if (title && link) {
-        db.Headline.insert({
-          title: title,
-          link: link
-        },
-        function(err, inserted) {
-          if (err) {
-            console.log(err);
-          }
-          else {
-            console.log(inserted);
-          }
+      // Add the text and href of every link, and save them as properties of the result object
+      result.title = $(this)
+        .children("p")
+        .text();
+      result.link = $(this)
+        .children("a")
+        .attr("href");
+
+      // Create a new Article using the `result` object built from scraping
+      db.Article.create(result)
+        .then(function(dbArticle) {
+          // View the added result in the console
+          console.log(dbArticle);
+        })
+        .catch(function(err) {
+          // If an error occurred, send it to the client
+          return res.json(err);
         });
-      }
+    });
+
+    // If we were able to successfully scrape and save an Article, send a message to the client
+    res.send("Scrape Complete");
     });
   });
+};
