@@ -4,6 +4,22 @@ var request = require("request");
 var Note = require("../models/Note.js");
 var Headline = require("../models/Headline.js");
 var index = require("../models/index.js");
+
+module.exports = function(app) {
+
+
+  app.get("/scrape", function (req, res) {
+    Headline.find({}, function (error, data) {
+        if (error) {
+          console.log(error);
+        } else {
+          res.render("index", {result: data});
+        }
+      })
+      .sort({'_id': -1});
+  });
+
+}
 // Scrape data from one site and place it into the mongodb db
 // app.get("/scrape", function(req, res) {
 //   // Make a request for the news section of `ycombinator`
