@@ -1,28 +1,25 @@
 var request = require("request");
 var cheerio = require("cheerio");
-var Note = require("../models/note.js");
-var Headline = require("../models/headline.js");
+var Note = require("../models/Note.js");
+var Headline = require("../models/Headline.js");
+var index = require("../models/index.js");
 
-var path = require("path");
-
-
-  module.exports = function(router) {
+// var path = require("path");
 
 
-  app.get("/headlines", function (req, res) {
-    Headline.find({}, function (error, data) {
-        if (error) {
-          console.log(error);
-        } else {
-          res.render("index", {result: data});
-        }
-      })
-      .sort({'_id': -1});
-  });
-
-}
-
-module.exports = function(app) {
+//   module.exports = function(app) {
 
 
-}
+//   app.get("/headlines", function (req, res) {
+//     Headline.find({}, function (error, data) {
+//         if (error) {
+//           console.log(error);
+//         } else {
+//           res.render("index", {result: data});
+//         }
+//       })
+//       .sort({'_id': -1});
+//   });
+
+// }
+

@@ -10,7 +10,8 @@ var NoteSchema = new Schema({
   },
  
   note: {
-    type: String
+    type: String,
+    required: true
   }
   
 });

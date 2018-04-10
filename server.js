@@ -7,17 +7,15 @@ var exphbs = require("express-handlebars");
 var app = express();
 var PORT = process.env.PORT || 3000;
 
-var Headline = require("./models/Headline.js");
-var Note = require("./models/Note.js");
-var index = require("./models/index.js")
+var db = require("./models");
+
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
-
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
-mongoose.Promise = Promise;
-mongoose.connect("mongodb://heroku_t09tdvkh:i4nl80q0d4r0811skng9gge6t6@ds013192.mlab.com:13192/heroku_t09tdvkh", {useMongoClient: true
-});
+mongoose.connect("mongodb://localhost/mongoHeadlines");
+// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+// mongoose.Promise = Promise;
+// mongoose.connect("mongodb://heroku_t09tdvkh:i4nl80q0d4r0811skng9gge6t6@ds013192.mlab.com:13192/heroku_t09tdvkh");
 
 app.use(express.static("public"));
 
@@ -32,8 +30,6 @@ app.set("view engine", "handlebars");
 
 require("./controllers/fetch.js")(app);
 require("./controllers/headline.js")(app);
-require("./controllers/note.js")(app);
-
 
 // Start the server
 app.listen(PORT, function() {

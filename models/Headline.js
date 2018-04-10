@@ -6,19 +6,22 @@ var HeadlineSchema = new Schema({
   
   title: {
   	type: String,
+    unique: true,
   	required: true
   },
 
   url: {
   	type: String,
+    unique: true,
   	required: true
   },
   
-  notes:
+  notes: [
   {
-  	type: Schema.Types.ObjectID,
+  	type: Schema.Types.ObjectId,
   	ref: "Note"
   }
+   ]
 });
 
 
