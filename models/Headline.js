@@ -14,12 +14,11 @@ var HeadlineSchema = new Schema({
   	required: true
   },
   
-  notes: [
+  notes:
   {
   	type: Schema.Types.ObjectID,
   	ref: "Note"
   }
-  ]
 });
 
 

@@ -9,13 +9,14 @@ var PORT = process.env.PORT || 3000;
 
 var Headline = require("./models/Headline.js");
 var Note = require("./models/Note.js");
+var index = require("./models/index.js")
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 // Connect to the Mongo DB
+
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 mongoose.Promise = Promise;
-mongoose.connect(MONGODB_URI, {
-  useMongoClient: true
+mongoose.connect("mongodb://heroku_t09tdvkh:i4nl80q0d4r0811skng9gge6t6@ds013192.mlab.com:13192/heroku_t09tdvkh", {useMongoClient: true
 });
 
 app.use(express.static("public"));
@@ -32,7 +33,6 @@ app.set("view engine", "handlebars");
 require("./controllers/fetch.js")(app);
 require("./controllers/headline.js")(app);
 require("./controllers/note.js")(app);
-require("./routes/api")(app);
 
 
 // Start the server
