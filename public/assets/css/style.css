@@ -1,0 +1,10 @@
+.jumbotron {
+  background-image: url("../images/newyork.jpg");
+  padding-left: 30px;
+  color: white;
+}
+
+#article-name, #article-link {
+  font-size: 25px;
+  margin: 10px;
+}
