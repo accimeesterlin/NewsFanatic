@@ -18,8 +18,6 @@ var axios = require("axios");
       })
   });
 
-
-// Scrape data from one site and place it into the mongodb db
 app.get("/scrape", function(req, res) {
   // Make a request for the news section of `ycombinator`
   axios.get("https://www.newyorker.com/news", function(error, response, html) {
